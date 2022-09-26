@@ -2,6 +2,8 @@
 #include "user.h"
 
 int main(int argc,char* argv[]){
+    printf("%s\n,%s\n,%s\n,%s\n,%d\n,%d\n",argv[0],argv[1],argv[2],argv[3],sizeof(*argv),argc);
+
     if(argc != 2){
         printf("Sleep needs one argument!\n"); //检查参数数量是否正确
         exit(-1);
