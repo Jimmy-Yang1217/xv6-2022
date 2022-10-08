@@ -22,9 +22,7 @@ int main(int args,char*argv[]){
     else if (pid > 0) { 
         /* 父进程 */
         char dad[10];
-        
         write(p[1],buf1,sizeof(buf1));
-
         close(p[1]); // 写入完成，关闭写端
         wait(0);
 

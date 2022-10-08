@@ -41,16 +41,10 @@ find(char *path,char *file)
     return;
   }
 
-  switch(st.type){
-  case T_FILE:
-        fprintf(2,"%s is not a dir",path);
-        close(fd);
-    break;
-
-  case T_DIR:
+  
     if(strlen(path) + 1 + DIRSIZ + 1 > sizeof buf){
       printf("ls: path too long\n");
-      break;
+      exit(0);
     }
     strcpy(buf, path);
     p = buf+strlen(buf);
@@ -73,7 +67,7 @@ find(char *path,char *file)
         
     }
   }
-}
+
 
 
 int main(int argc, char *argv[])
