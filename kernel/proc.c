@@ -276,6 +276,8 @@ fork(void)
   np->sz = p->sz;
 
   np->parent = p;
+  //保证子进程继承父进程的mask
+  np->mask = p->mask;
 
   // copy saved user registers.
   *(np->trapframe) = *(p->trapframe);
@@ -692,4 +694,32 @@ procdump(void)
     printf("%d %s %s", p->pid, state, p->name);
     printf("\n");
   }
+}
+
+uint64
+get_procnum(void)
+{
+  uint64 i = 0;
+  struct proc *p;
+  for(p = proc; p < &proc[NPROC]; p++) { 
+    acquire(&p->lock);
+    if(p->state == UNUSED) 
+      i++;
+    release(&p->lock);
+  }
+  return i;
+}
+
+
+uint64
+get_freefd(void)
+{
+  uint64 i = 0;
+  int fd;
+  struct proc *p = myproc();
+  for(fd = 0; fd < NOFILE; fd++){
+    if(p->ofile[fd] == 0)
+      i++;
+  }
+  return i;
 }
